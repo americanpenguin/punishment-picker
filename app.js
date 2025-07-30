@@ -128,9 +128,12 @@
       resultCard.textContent = punishment;
       resultCard.classList.remove('hidden');
 
-      // Reset the button state
+      // Reset the button state and return to a consistent label.  Instead of
+      // prompting the user to get “another” punishment, the button always
+      // reads “I lost!” so players simply acknowledge their loss to draw
+      // the next challenge.
       button.disabled = false;
-      button.textContent = 'Get Another Punishment';
+      button.textContent = 'I lost!';
     });
   }
 
