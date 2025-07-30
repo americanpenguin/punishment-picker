@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Punishment Picker</title>
+    <!-- Link to the external stylesheet -->
+    <link rel="stylesheet" href="style.css" />
+    <!-- Import a friendly Google font for a playful feel -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main id="app">
+      <header>
+        <h1>Punishment Picker</h1>
+        <p class="subtitle">
+          Lost a round? Tap the button below to receive your next challenge.
+        </p>
+      </header>
+      <section class="action-area">
+        <button id="punishBtn" class="primary-btn">Get Punishment</button>
+      </section>
+      <section id="result" class="result-card hidden"></section>
+      <footer>
+        <small>
+          Data is pulled from your Google spreadsheet. Make sure your sheet is
+          published to the web and accessible to anyone with the link.
+        </small>
+      </footer>
+    </main>
+    <!-- App logic -->
+    <script src="app.js"></script>
+  </body>
+</html>
