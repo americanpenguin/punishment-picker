@@ -70,13 +70,36 @@
   }
 
   /**
-   * Chooses a random item from the provided array.
-   * @param {any[]} array The array to choose from
-   * @returns {any} A random element from the array
+   * Maintains a shuffled list of punishments and ensures that each
+   * punishment is shown only once per cycle. When all punishments
+   * have been displayed, the list is reshuffled and the cycle
+   * restarts.
    */
-  function randomItem(array) {
-    const index = Math.floor(Math.random() * array.length);
-    return array[index];
+  let shuffledList = [];
+  let listIndex = 0;
+
+  /**
+   * Returns the next punishment from the shuffled list, rebuilding and
+   * shuffling if necessary. This ensures no repeats until the list is
+   * exhausted.
+   *
+   * @param {string[]} punishments The latest list of punishments fetched
+   * @returns {string} The selected punishment
+   */
+  function nextPunishment(punishments) {
+    // If we have exhausted the list or the stored list is outdated, rebuild
+    if (!Array.isArray(shuffledList) || listIndex >= shuffledList.length) {
+      // Create a fresh copy and shuffle it using Fisher–Yates algorithm
+      shuffledList = punishments.slice();
+      for (let i = shuffledList.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledList[i], shuffledList[j]] = [shuffledList[j], shuffledList[i]];
+      }
+      listIndex = 0;
+    }
+    const punishment = shuffledList[listIndex];
+    listIndex += 1;
+    return punishment;
   }
 
   /**
@@ -99,17 +122,15 @@
         // Fallback to the default list if nothing is returned
         punishments = fallbackPunishments;
       }
-      // Select a random punishment
-      const punishment = randomItem(punishments);
+      // Get the next punishment from the shuffled list
+      const punishment = nextPunishment(punishments);
       // Display the punishment
       resultCard.textContent = punishment;
       resultCard.classList.remove('hidden');
 
       // Reset the button state
       button.disabled = false;
-      button.textContent = originalText === 'Get Another Punishment'
-        ? 'Get Another Punishment'
-        : 'Get Another Punishment';
+      button.textContent = 'Get Another Punishment';
     });
   }
 
